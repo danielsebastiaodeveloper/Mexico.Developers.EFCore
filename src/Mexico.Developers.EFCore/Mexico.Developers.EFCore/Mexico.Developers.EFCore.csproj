@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+
+    <ProjectGuid>FD2CE840-0573-4A90-9AEE-B417B9D220E3</ProjectGuid>
+    <Description>EFCore to develop microservices</Description>
+    <Authors>Daniel Sebastiao</Authors>
+    <Company>MX Developers</Company>
+    <RepositoryUrl>https://github.com/danielsebastiaodeveloper/Mexico.Developers.EFCore</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/danielsebastiaodeveloper/Mexico.Developers.EFCore</PackageProjectUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>MX Developers</PackageTags>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageId>Mexico.Developers.EFCore</PackageId>
+    <Version>1.0.1</Version>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mexico.Developers.Abstractions" Version="1.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
+  </ItemGroup>
+
+</Project>
