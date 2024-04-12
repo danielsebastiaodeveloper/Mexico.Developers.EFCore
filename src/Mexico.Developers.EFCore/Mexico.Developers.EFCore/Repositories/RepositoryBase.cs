@@ -92,7 +92,7 @@ public abstract class RepositoryBase<TKey, TUserKey> : IRepositoryBase<TKey, TUs
     /// </summary>
     /// <typeparam name="TEntity">The type of entity for which a set should be returned.</typeparam>
     /// <returns>A set for the given entity type.</returns>
-    public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>(bool state, CancellationToken cancellationToken) where TEntity : class, IEntityBase<TKey, TUserKey>
+    public async Task<IEnumerable<TEntity?>> GetAllAsync<TEntity>(bool state, CancellationToken cancellationToken) where TEntity : class, IEntityBase<TKey, TUserKey>
     {
         return await this.Context.Set<TEntity>().AsNoTracking().Where(x => x.State == state).ToListAsync(cancellationToken);
     }
@@ -103,7 +103,7 @@ public abstract class RepositoryBase<TKey, TUserKey> : IRepositoryBase<TKey, TUs
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<TEntity> GetAsync<TEntity>(TKey id, CancellationToken cancellationToken) where TEntity : class, IEntityBase<TKey, TUserKey>
+    public async Task<TEntity?> GetAsync<TEntity>(TKey id, CancellationToken cancellationToken) where TEntity : class, IEntityBase<TKey, TUserKey>
     {
         var entity = this.Context.Set<TEntity>().AsNoTracking();
         try
