@@ -75,16 +75,16 @@ public abstract class RepositoryBase<TKey, TUserKey> : IRepositoryBase<TKey, TUs
     /// <param name="id">A function to test each element for a condition.</param>
     /// <param name="cancellationToken">Propagates notification that operations should be canceled.</param>
     /// <returns>Represents an asynchronous operation that can return a value.</returns>
-    private async Task ProcessDeleteAsync<TEntity>(TKey id, CancellationToken cancellationToken) where TEntity : class, IEntityBase<TKey, TUserKey> 
+    private async Task ProcessDeleteAsync<TEntity>(TKey id, CancellationToken cancellationToken) where TEntity : class, IEntityBase<TKey, TUserKey>
     {
-        var entity = await this.Context.Set<TEntity>().FirstOrDefaultAsync( x => (x.Id != null && x.Id.Equals(id)), cancellationToken);
+        var entity = await this.Context.Set<TEntity>().FirstOrDefaultAsync(x => (x.Id != null && x.Id.Equals(id)), cancellationToken);
         if (entity is null)
         {
             throw new EntityNotFoundException($"The entity with id {id} not found");
         }
         this.Context.Set<TEntity>().Remove(entity);
     }
-    
+
     /// <summary>
     /// Method that updates an entity in the database
     /// </summary>
@@ -118,7 +118,7 @@ public abstract class RepositoryBase<TKey, TUserKey> : IRepositoryBase<TKey, TUs
     /// </summary>
     /// <typeparam name="TEntity">The type of entity for which a set should be returned.</typeparam>
     /// <returns>A set for the given entity type.</returns>
-    public async Task<IEnumerable<TEntity?>> GetAllAsync<TEntity>(bool state, CancellationToken cancellationToken) where TEntity : class, IEntityBase<TKey, TUserKey>
+    public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>(bool state, CancellationToken cancellationToken) where TEntity : class, IEntityBase<TKey, TUserKey>
     {
         return await this.Context.Set<TEntity>().AsNoTracking().Where(x => x.State == state).ToListAsync(cancellationToken);
     }
@@ -132,19 +132,6 @@ public abstract class RepositoryBase<TKey, TUserKey> : IRepositoryBase<TKey, TUs
     public async Task<TEntity?> GetAsync<TEntity>(TKey id, CancellationToken cancellationToken) where TEntity : class, IEntityBase<TKey, TUserKey>
     {
         var entity = this.Context.Set<TEntity>().AsNoTracking();
-        try
-        {
-            return await entity.FirstAsync(x => Equals(x.Id, id), cancellationToken);
-        }
-        catch (Exception ex)
-        {
-            switch (ex)
-            {
-                case InvalidOperationException:
-                    throw new EntityNotFoundException($"The entity with id {id} not found");
-                default:
-                    throw;
-            }
-        }
+        return await entity.FirstOrDefaultAsync(x => Equals(x.Id, id), cancellationToken);
     }
 }
